@@ -6,12 +6,11 @@ version '1.2.0'
 
 ui_page 'html/index.html'
 
+shared_scripts {
+    '@ox_lib/init.lua',
+}
+
 client_scripts {
-    '@PolyZone/client.lua',
-    '@PolyZone/BoxZone.lua',
-    '@PolyZone/EntityZone.lua',
-    '@PolyZone/CircleZone.lua',
-    '@PolyZone/ComboZone.lua',
     'client/cl_main.lua',
 }
 
@@ -26,4 +25,8 @@ files {
     'html/index.html',
     'html/style.css',
     'html/script.js',
+}
+
+dependencies {
+    'ox_lib'
 }
