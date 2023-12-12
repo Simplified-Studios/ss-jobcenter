@@ -1,7 +1,7 @@
 Config = {}
 
 Config.Main = {
-    useTarget = false,
+    useTarget = 'qb', -- 'qb' , 'ox' , or 'lib' target / draw text UI
     Locations = {
         ["jobcenter"] = {
             coords = vector4(-269.19, -956.09, 31.22, 206.34),
