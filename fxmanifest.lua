@@ -26,7 +26,3 @@ files {
     'html/style.css',
     'html/script.js',
 }
-
-dependencies {
-    'ox_lib'
-}
