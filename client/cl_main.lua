@@ -4,7 +4,10 @@ local zones = {}
 RegisterNetEvent('ss-jobcenter:client:setup', function(cfg)
     Config = cfg
     for k, v in pairs(Config.Locations) do
-        lib.requestModel(v.model)
+        RequestModel(v.model)
+        while not HasModelLoaded(v.model) do
+            Wait(1)
+        end
         local ped = CreatePed(4, v.model, v.coords.x, v.coords.y, v.coords.z - 1, v.coords.w, false, true)
         PlaceObjectOnGroundProperly(ped)
         SetEntityHeading(ped, v.coords.w)
@@ -77,8 +80,8 @@ RegisterNetEvent('ss-jobcenter:client:openJobCenter', function(config)
     SetNuiFocus(true, true)
 end)
 
-RegisterNUICallback('startJob', function(data, cb)
-    TriggerServerEvent('ss-jobcenter:server:startJob', data.rank)
+RegisterNUICallback('select', function(data, cb)
+    TriggerServerEvent('ss-jobcenter:server:select', data)
     SetNuiFocus(false, false)
     cb('ok')
 end)
@@ -93,8 +96,7 @@ AddEventHandler('QBCore:Client:OnPlayerLoaded', function()
 end)
 
 AddEventHandler('onResourceStart', function(resourceName)
-    if (GetCurrentResourceName() ~= resourceName) then
-        return
+    if GetCurrentResourceName() == resourceName then
+        TriggerServerEvent('ss-jobcenter:server:setup')
     end
-    TriggerServerEvent('ss-jobcenter:server:setup')
 end)
