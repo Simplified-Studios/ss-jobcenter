@@ -1,7 +1,8 @@
 Config = {}
 
 Config.Main = {
-    useTarget = 'qb', -- 'qb' , 'ox' , or 'lib' target / draw text UI
+    Framework = 'qb', -- 'qb', 'esx'
+    target = 'qb', -- 'qb', 'ox'
     Locations = {
         ["jobcenter"] = {
             coords = vector4(-269.19, -956.09, 31.22, 206.34),
@@ -42,26 +43,28 @@ Config.Jobs = {
 }
 
 Config.Licenses = {
-    {
-        name = "ID Card",
-        image = "idcard.png",
-        price = 50,
-        item = "id_card",
-    },
-    {
-        name = "Driver's License",
-        image = "driverslicense.png",
-        price = 500,
-        item = "driver_license",
-        description = "A driver's license is required to operate a motor vehicle.",
-    },
-    {
-        name = "Firearm's License",
-        image = "firearmslicense.png",
-        price = 5000,
-        item = "weaponlicense",
-        description = "A firearms license is required to purchase a firearm from Ammunation.",
-    },
+    ["qb"] = {
+        {
+            name = "ID Card",
+            image = "idcard.png",
+            price = 50,
+            item = "id_card",
+        },
+        {
+            name = "Driver's License",
+            image = "driverslicense.png",
+            price = 500,
+            item = "driver_license",
+            description = "A driver's license is required to operate a motor vehicle.",
+        },
+        {
+            name = "Firearm's License",
+            image = "firearmslicense.png",
+            price = 5000,
+            item = "weaponlicense",
+            description = "A firearms license is required to purchase a firearm from Ammunation.",
+        },
+    }
 }
 
 Config.tagColors = {

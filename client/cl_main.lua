@@ -1,22 +1,23 @@
 Config = {}
-local zones = {}
+peds = {}
 
 RegisterNetEvent('ss-jobcenter:client:setup', function(cfg)
     Config = cfg
     for k, v in pairs(Config.Locations) do
+        print(k)
         RequestModel(v.model)
         while not HasModelLoaded(v.model) do
             Wait(1)
         end
-        local ped = CreatePed(4, v.model, v.coords.x, v.coords.y, v.coords.z - 1, v.coords.w, false, true)
-        PlaceObjectOnGroundProperly(ped)
-        SetEntityHeading(ped, v.coords.w)
-        SetEntityInvincible(ped, true)
-        SetBlockingOfNonTemporaryEvents(ped, true)
+        peds[k] = CreatePed(4, v.model, v.coords.x, v.coords.y, v.coords.z - 1, v.coords.w, false, true)
+        PlaceObjectOnGroundProperly(peds[k])
+        SetEntityHeading(peds[k], v.coords.w)
+        SetEntityInvincible(peds[k], true)
+        SetBlockingOfNonTemporaryEvents(peds[k], true)
         SetModelAsNoLongerNeeded(v.model)
-        FreezeEntityPosition(ped, true)
-        if Config.useTarget == 'qb' then
-            exports['qb-target']:AddTargetEntity(ped, {
+        FreezeEntityPosition(peds[k], true)
+        if Config.target == 'qb' then
+            exports['qb-target']:AddTargetEntity(peds[k], {
                 options = {
                     {
                         type = 'server',
@@ -27,7 +28,7 @@ RegisterNetEvent('ss-jobcenter:client:setup', function(cfg)
                 },
                 distance = 1.5,
             })
-        elseif Config.useTarget == 'ox' then
+        elseif Config.target == 'ox' then
             local params = {
                 label = "Job Center",
                 name = "jobcenter",
@@ -36,28 +37,7 @@ RegisterNetEvent('ss-jobcenter:client:setup', function(cfg)
                 distance = 3.0,
                 serverEvent = "ss-jobcenter:server:openJobCenter",
             }
-            exports.ox_target:addLocalEntity(ped, params)
-        elseif Config.useTarget == 'lib' then
-            local params = {
-                coords = vec3(v.coords.x, v.coords.y, v.coords.z),
-                size = vec3(3.0, 3.0, 1.0),
-                rotation = v.coords.w,
-                onEnter = function()
-                    lib.showTextUI('[E] City Hall')
-                end,
-                inside = function()
-                    if IsControlJustPressed(0, 38) then
-                        lib.hideTextUI()
-                        TriggerServerEvent('ss-jobcenter:server:openJobCenter')
-                    end
-                end,
-                onExit = function()
-                    lib.hideTextUI()
-                end,
-                debug = Config.Debug,
-            }
-            local zone = lib.zones.box(params)
-            zones[#zones + 1] = zone
+            exports.ox_target:addLocalEntity(peds[k], params)
         end
 
         local blip = AddBlipForCoord(v.coords.x, v.coords.y, v.coords.z)
@@ -89,14 +69,4 @@ end)
 RegisterNUICallback('close', function(data, cb)
     SetNuiFocus(false, false)
     cb('ok')
-end)
-
-AddEventHandler('QBCore:Client:OnPlayerLoaded', function()
-    TriggerServerEvent('ss-jobcenter:server:setup')
-end)
-
-AddEventHandler('onResourceStart', function(resourceName)
-    if GetCurrentResourceName() == resourceName then
-        TriggerServerEvent('ss-jobcenter:server:setup')
-    end
 end)

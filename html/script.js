@@ -34,7 +34,7 @@ window.addEventListener('message', function(event) {
             `;
             $("#jobs-container").append(dynamicContent);
         });
-        Object.entries(config.Licenses).forEach(([licenseKey, license]) => {
+        Object.entries(config.Licenses[config.Main.Framework]).forEach(([licenseKey, license]) => {
             var dynamicContent = `
             <div class="mx-auto max-w-md overflow-hidden rounded-lg h-[29rem] bg-slate-900 mb-10" style="display: none" id="license-${licenseKey}">
                 <img src="./img/${license.image}" class="aspect-video w-full object-cover opacity-50" alt="" />
@@ -60,7 +60,7 @@ $("#up").on("click", function (event) {
         const nextJob = (currentJob + 1) % config.Jobs.length;
         showJob(nextJob);
     } else if (selectedCategory === "licenses") {
-        const nextLicense = (currentLicense + 1) % config.Licenses.length;
+        const nextLicense = (currentLicense + 1) % config.Licenses[config.Main.Framework].length;
         showLicense(nextLicense);
     }
 });
@@ -71,7 +71,7 @@ $("#down").on("click", function (event) {
         const prevJob = (currentJob - 1 + config.Jobs.length) % config.Jobs.length;
         showJob(prevJob);
     } else if (selectedCategory === "licenses") {
-        const prevLicense = (currentLicense - 1 + config.Licenses.length) % config.Licenses.length;
+        const prevLicense = (currentLicense - 1 + config.Licenses[config.Main.Framework].length) % config.Licenses[config.Main.Framework].length;
         showLicense(prevLicense);
     }
 });
@@ -103,10 +103,11 @@ const showLicense = (licenseIndex) => {
 
 const startJob = (_type, jobIndex) => {
     $('html, body').css('display', 'none');
+    console.log(config.Licenses[config.Main.Framework])
     $.post(`https://${GetParentResourceName()}/select`, JSON.stringify({
         type: _type,    
         job: config.Jobs[jobIndex].rank,
-        license: config.Licenses[jobIndex],
+        license: config.Licenses[config.Main.Framework][jobIndex],
     }));
 }
 

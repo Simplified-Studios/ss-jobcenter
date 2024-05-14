@@ -6,17 +6,13 @@ version '1.2.0'
 
 ui_page 'html/index.html'
 
-shared_scripts {
-    '@ox_lib/init.lua',
-}
-
 client_scripts {
     'client/cl_main.lua',
 }
 
 server_scripts {
-    'config.lua',
-    'server/sv_main.lua',
+    'shared/config.lua',
+    'server/*.lua',
 }
 
 files {

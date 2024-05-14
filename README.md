@@ -1,12 +1,8 @@
-## ss-jobcenter-qb
+## ss-jobcenter
 
 # How to Use
-* Configure `Config.useTarget` to your needs, `'qb'` `'ox'` or `'lib'` based on your resources.
-
-# Dependencies
-[ox_lib](https://github.com/overextended/ox_lib) - zones and Draw Text UI
-
-[qb-target](https://github.com/qbcore-framework/qb-target) / [ox_target](https://github.com/overextended/ox_target) - interchangeable
+* Configure Config.Framework to your needs `'qb'` or `'esx'` based on your framework
+* Configure `Config.target` to your needs, `'qb'` or `'ox'` based on your resources.
 
 # Troubleshooting & Support
 If you need any help, or you wanna check out our other resources. Then join our discord
